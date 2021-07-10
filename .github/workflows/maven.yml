@@ -1,0 +1,22 @@
+name: Java CI with Maven (TestNG)
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    name: Build and Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v1
+      - name: Build and Run Tests
+        run: mvn test --batch-mode -Dmaven.test.failure.ignore=true
+      - name: Publish Test Report
+        uses: starburstdata/action-testng-report@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+
